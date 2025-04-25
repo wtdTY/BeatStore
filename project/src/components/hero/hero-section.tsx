@@ -134,7 +134,7 @@ export default function HeroSection() {
           className="text-center max-w-4xl mx-auto"
         >
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium">
-            Blairing Records, LLC
+            Blairing Records
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4 leading-tight">
