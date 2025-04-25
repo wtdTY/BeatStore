@@ -8,6 +8,7 @@ import BeatsPage from "@/pages/beats";
 import BeatDetailPage from "@/pages/beat-detail";
 import CartPage from "@/pages/cart";
 import ContactPage from "@/pages/contact";
+import TermsPage from "@/pages/terms";  // Import the Terms page
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/beat/:id" element={<BeatDetailPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/terms-of-service" element={<TermsPage />} />  {/* Add this route */}
             </Routes>
           </Layout>
         </Router>
