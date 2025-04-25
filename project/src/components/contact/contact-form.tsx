@@ -41,7 +41,7 @@ export default function ContactForm() {
     },
   });
 
-  function onSubmit(formData: FormValues) {
+  function onSubmit(data: FormValues) {
     setIsSubmitting(true);
     setTimeout(() => {
       toast({
@@ -51,6 +51,9 @@ export default function ContactForm() {
       form.reset();
       setIsSubmitting(false);
     }, 1500);
+
+    // If you want to log the form data, you can do so here:
+    console.log(data); // Optional
   }
 
   return (
