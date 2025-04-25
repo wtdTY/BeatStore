@@ -1,0 +1,33 @@
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { CartProvider } from "@/contexts/cart-context";
+import Layout from "@/components/layout/layout";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "@/pages/home";
+import BeatsPage from "@/pages/beats";
+import BeatDetailPage from "@/pages/beat-detail";
+import CartPage from "@/pages/cart";
+import ContactPage from "@/pages/contact";
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="dark">
+      <CartProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/beats" element={<BeatsPage />} />
+              <Route path="/beat/:id" element={<BeatDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Routes>
+          </Layout>
+        </Router>
+        <Toaster />
+      </CartProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;
