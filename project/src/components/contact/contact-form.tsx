@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
+// Your Zod schema for validation
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -36,23 +37,9 @@ type FormValues = z.infer<typeof formSchema>;
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  
-import { useForm } from "react-hook-form";  // Make sure you have this
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
-// Your Zod schema for validation
-const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  subject: z.string().min(1, "Subject is required"),
-  message: z.string().min(1, "Message is required"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
-
-export default function ContactForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  // Initialize form with react-hook-form
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -62,24 +49,7 @@ export default function ContactForm() {
     },
   });
 
-  // Form submission handler
-  const onSubmit = (data: FormValues) => {
-    // Now `data` contains all form values directly
-    console.log("Form submitted", data);
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("name")} placeholder="Your Name" />
-      <input {...register("email")} placeholder="Your Email" />
-      <input {...register("subject")} placeholder="Subject" />
-      <textarea {...register("message")} placeholder="Your Message" />
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-
-  function onSubmit(values: FormValues) {
+  const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
     // Simulate API call
@@ -92,7 +62,7 @@ export default function ContactForm() {
       form.reset();
       setIsSubmitting(false);
     }, 1500);
-  }
+  };
 
   return (
     <Form {...form}>
@@ -105,9 +75,9 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Your Name</FormLabel>
                 <FormControl>
-                  <Input 
-                    placeholder="John Doe" 
-                    {...field} 
+                  <Input
+                    placeholder="John Doe"
+                    {...field}
                     className="bg-background"
                   />
                 </FormControl>
@@ -123,10 +93,10 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Your Email</FormLabel>
                 <FormControl>
-                  <Input 
-                    placeholder="john@example.com" 
-                    type="email" 
-                    {...field} 
+                  <Input
+                    placeholder="john@example.com"
+                    type="email"
+                    {...field}
                     className="bg-background"
                   />
                 </FormControl>
@@ -135,7 +105,7 @@ export default function ContactForm() {
             )}
           />
         </div>
-        
+
         <FormField
           control={form.control}
           name="subject"
@@ -143,9 +113,9 @@ export default function ContactForm() {
             <FormItem>
               <FormLabel>Subject</FormLabel>
               <FormControl>
-                <Input 
-                  placeholder="How can we help you?" 
-                  {...field} 
+                <Input
+                  placeholder="How can we help you?"
+                  {...field}
                   className="bg-background"
                 />
               </FormControl>
@@ -153,7 +123,7 @@ export default function ContactForm() {
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="message"
@@ -161,27 +131,43 @@ export default function ContactForm() {
             <FormItem>
               <FormLabel>Your Message</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="Please provide details about your inquiry..." 
+                <Textarea
+                  placeholder="Please provide details about your inquiry..."
                   className="min-h-32 bg-background"
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        
-        <Button 
-          type="submit" 
+
+        <Button
+          type="submit"
           className="w-full md:w-auto bg-red-500 hover:bg-red-600"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <span className="flex items-center">
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
               </svg>
               Sending...
             </span>
