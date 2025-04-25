@@ -41,7 +41,7 @@ export default function ContactForm() {
     },
   });
 
-  function onSubmit(data: FormValues) {
+  function onSubmit(formData: FormValues) {
     setIsSubmitting(true);
     setTimeout(() => {
       toast({
