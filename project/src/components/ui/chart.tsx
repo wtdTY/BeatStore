@@ -1,3 +1,4 @@
+/*
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 import {
@@ -357,12 +358,4 @@ function getPayloadConfigFromPayload(
     ? config[configLabelKey]
     : config[key as keyof typeof config];
 }
-
-export {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
-};
+*/
