@@ -37,7 +37,22 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   
-  const form = useForm<FormValues>({
+import { useForm } from "react-hook-form";  // Make sure you have this
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// Your Zod schema for validation
+const formSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email"),
+  subject: z.string().min(1, "Subject is required"),
+  message: z.string().min(1, "Message is required"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
+export default function ContactForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -46,6 +61,23 @@ export default function ContactForm() {
       message: "",
     },
   });
+
+  // Form submission handler
+  const onSubmit = (data: FormValues) => {
+    // Now `data` contains all form values directly
+    console.log("Form submitted", data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("name")} placeholder="Your Name" />
+      <input {...register("email")} placeholder="Your Email" />
+      <input {...register("subject")} placeholder="Subject" />
+      <textarea {...register("message")} placeholder="Your Message" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
 
   function onSubmit(values: FormValues) {
     setIsSubmitting(true);
